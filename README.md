@@ -54,6 +54,25 @@ The entire migration was done conversationally via **GitHub Copilot CLI**, going
 - **Emscripten SDK** (only if you want to recompile the WASM engine)
 - A **DOOM1.WAD** file (the shareware version is freely available)
 
+## Rebuilding The WASM Engine
+
+The browser platform adapters used to compile the original DOOM C engine live
+in `wasm/`. Clone the id Software DOOM source separately, then point the build
+script at its `linuxdoom-1.10` directory:
+
+```bash
+DOOM_SRC_DIR=/path/to/DOOM/linuxdoom-1.10 npm run build:engine
+```
+
+`DOOM_PLATFORM_DIR` can override the adapter directory when testing alternate
+Emscripten platform files. If an Emscripten install exposes a read-only frozen
+cache, rebuild with a writable cache location:
+
+```bash
+EM_FROZEN_CACHE= EM_CACHE=/tmp/doom-typescript-em-cache \
+  DOOM_SRC_DIR=/path/to/DOOM/linuxdoom-1.10 npm run build:engine
+```
+
 ## Installation & Running
 
 ```bash
